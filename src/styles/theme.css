@@ -1,0 +1,511 @@
+/* ==========================================================================
+   TEN TEMPLATES, one page.
+   [data-theme="<id>"] on <html> swaps everything below. Each block sets:
+     palette   --bg, --surface, --text, --accent ...
+     type      --font-body / --font-display (all SIL OFL 1.1, loaded on demand)
+     shape     --r-*, --card-*, --btn-radius
+     MOTION    --rv-*    how content arrives while you scroll
+               --word-*  how the headline words pop in
+               --pop-*   how interactive pop-up text opens
+   The keyframes these names point to live in templates.css. The default (first) template is
+   Lumen. Colour pairs were checked against WCAG AA with a script: text 4.5:1, control borders 3:1.
+   ========================================================================== */
+
+/* Defaults = Lumen. A template overrides only what makes it different. */
+:root {
+  --font-fallback: Arial, sans-serif;
+  --font-body: "Inter Variable", var(--font-fallback);
+  --font-display: var(--font-body);
+  --display-weight: 700;
+  --display-track: -0.04em;
+
+  --r-sm: 12px;
+  --r-md: 20px;
+  --r-lg: 28px;
+  --btn-radius: 999px;
+
+  --card-bg: var(--surface);
+  --card-border: 1px solid transparent;
+  --card-shadow: none;
+  --card-shadow-hover: var(--shadow-lg);
+  --card-lift: -6px;
+
+  --label-case: none;
+  --label-track: 0;
+  --bg-fx: none;
+  --status: #30d158;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Motion: scroll reveal */
+  --rv-from: translateY(32px) scale(0.985);
+  --rv-filter: none;
+  --rv-clip: inset(-80px);
+  --rv-dur: 900ms;
+  --rv-ease: var(--ease);
+  --rv-stagger: 70ms;
+  /* Motion: headline words */
+  --word-anim: w-rise;
+  --word-dur: 1000ms;
+  --word-ease: var(--ease);
+  --word-gap: 90ms;
+  --word-overflow: hidden;
+  /* Motion: pop-up text */
+  --pop-anim: p-float;
+  --pop-dur: 420ms;
+  --pop-ease: var(--ease);
+  /* Motion: card drift while scrolling (px) */
+  --drift: 18px;
+}
+
+/* 1. Lumen (default): white, large type, one blue */
+:root,
+[data-theme="lumen"] {
+  color-scheme: light;
+  --bg: #ffffff;
+  --bg-elev: #ffffff;
+  --surface: #f5f5f7;
+  --surface-2: #ececf0;
+  --bar: #e3e3e8;
+  --chip: #ffffff;
+  --text: #1d1d1f;
+  --text-2: #424245;
+  --muted: #68686d;
+  --line: rgba(0, 0, 0, 0.1);
+  --line-strong: #86868b;
+  --accent: #0071e3;
+  --accent-hover: #0062c4;
+  --accent-soft: rgba(0, 113, 227, 0.12);
+  --on-accent: #ffffff;
+  --link: #0066cc;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.12);
+  --scrim: rgba(0, 0, 0, 0.32);
+}
+
+/* 2. Midnight: the same page in black. Slower, longer rise; the sheet comes up from below */
+[data-theme="midnight"] {
+  color-scheme: dark;
+  --bg: #000000;
+  --bg-elev: #1c1c1e;
+  --surface: #1c1c1e;
+  --surface-2: #2c2c2e;
+  --bar: #3a3a3c;
+  --chip: #3a3a3c;
+  --text: #f5f5f7;
+  --text-2: #d1d1d6;
+  --muted: #98989d;
+  --line: rgba(255, 255, 255, 0.14);
+  --line-strong: #6e6e73;
+  --accent: #0071e3;
+  --accent-hover: #0062c4;
+  --accent-soft: rgba(41, 151, 255, 0.18);
+  --on-accent: #ffffff;
+  --link: #2997ff;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 24px 70px rgba(0, 0, 0, 0.7);
+  --scrim: rgba(0, 0, 0, 0.55);
+
+  --rv-from: translateY(56px);
+  --rv-dur: 1300ms;
+  --rv-stagger: 110ms;
+  --word-anim: w-rise;
+  --word-dur: 1400ms;
+  --word-gap: 130ms;
+  --pop-anim: p-sheet-up;
+  --pop-dur: 560ms;
+  --drift: 30px;
+}
+
+/* 3. Obsidian Glass: blur-to-focus, frosted pop-ups */
+[data-theme="obsidian"] {
+  color-scheme: dark;
+  --bg: #05070b;
+  --bg-elev: #0e1420;
+  --surface: #0a0f17;
+  --surface-2: #0e1420;
+  --bar: #172033;
+  --chip: #172033;
+  --text: #eaf2ff;
+  --text-2: #b9c7dd;
+  --muted: #8a9bb8;
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: #5a6f94;
+  --accent: #4cc2ff;
+  --accent-hover: #7fd3ff;
+  --accent-soft: rgba(76, 194, 255, 0.14);
+  --on-accent: #031018;
+  --link: #4cc2ff;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.55);
+  --scrim: rgba(0, 0, 0, 0.55);
+  --font-body: "Manrope Variable", var(--font-fallback);
+  --font-display: "Manrope Variable", var(--font-fallback);
+  --r-sm: 10px;
+  --r-md: 18px;
+  --r-lg: 26px;
+  --card-bg: color-mix(in srgb, var(--surface-2) 62%, transparent);
+  --card-border: 1px solid var(--line);
+  --card-lift: -5px;
+
+  --rv-from: translateY(18px) scale(0.96);
+  --rv-filter: blur(14px);
+  --rv-dur: 1100ms;
+  --rv-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --rv-stagger: 80ms;
+  --word-anim: w-focus;
+  --word-dur: 1100ms;
+  --word-overflow: visible;
+  --pop-anim: p-glass;
+  --pop-dur: 520ms;
+  --pop-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --drift: 34px;
+}
+
+/* 4. Editorial: curtain reveal, newspaper-sheet pop-ups */
+[data-theme="editorial"] {
+  color-scheme: light;
+  --bg: #f6f1e7;
+  --bg-elev: #fbf8f1;
+  --surface: #efe8d8;
+  --surface-2: #ece4d3;
+  --bar: #d9cfba;
+  --chip: #f6f1e7;
+  --text: #1c1917;
+  --text-2: #3f3a34;
+  --muted: #6b6359;
+  --line: rgba(28, 25, 23, 0.18);
+  --line-strong: #3d3731;
+  --accent: #b4380d;
+  --accent-hover: #922c08;
+  --accent-soft: rgba(180, 56, 13, 0.1);
+  --on-accent: #ffffff;
+  --link: #a8320a;
+  --shadow-sm: none;
+  --shadow-lg: 0 18px 40px rgba(28, 25, 23, 0.14);
+  --scrim: rgba(28, 25, 23, 0.4);
+  --font-display: "Playfair Display Variable", Georgia, serif;
+  --display-weight: 700;
+  --display-track: -0.02em;
+  --r-sm: 0px;
+  --r-md: 0px;
+  --r-lg: 0px;
+  --btn-radius: 0px;
+  --label-case: uppercase;
+  --label-track: 0.12em;
+  --card-bg: transparent;
+  --card-border: 0 solid transparent;
+  --card-lift: -2px;
+
+  --rv-from: translateY(26px);
+  --rv-clip: inset(100% 0 0 0);
+  --rv-dur: 1000ms;
+  --rv-ease: cubic-bezier(0.7, 0, 0.2, 1);
+  --rv-stagger: 110ms;
+  --word-anim: w-curtain;
+  --word-dur: 1100ms;
+  --word-ease: cubic-bezier(0.7, 0, 0.2, 1);
+  --word-gap: 120ms;
+  --pop-anim: p-sheet;
+  --pop-dur: 650ms;
+  --pop-ease: cubic-bezier(0.7, 0, 0.2, 1);
+  --drift: 22px;
+}
+
+/* 5. Neo Brutal: slam-in with overshoot, stickers that jump */
+[data-theme="brutal"] {
+  color-scheme: light;
+  --bg: #fff4d6;
+  --bg-elev: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #ffe9a8;
+  --bar: #ffd966;
+  --chip: #ffe9a8;
+  --text: #111111;
+  --text-2: #2b2b2b;
+  --muted: #4a4a4a;
+  --line: #111111;
+  --line-strong: #111111;
+  --accent: #ff5d8f;
+  --accent-hover: #ff7aa3;
+  --accent-soft: rgba(255, 93, 143, 0.22);
+  --on-accent: #111111;
+  --link: #b0124f;
+  --shadow-sm: 3px 3px 0 #111111;
+  --shadow-lg: 6px 6px 0 #111111;
+  --scrim: rgba(17, 17, 17, 0.5);
+  --font-body: "Space Grotesk Variable", var(--font-fallback);
+  --font-display: "Space Grotesk Variable", var(--font-fallback);
+  --display-track: -0.04em;
+  --r-sm: 0px;
+  --r-md: 4px;
+  --r-lg: 6px;
+  --btn-radius: 0px;
+  --label-case: uppercase;
+  --label-track: 0.05em;
+  --card-bg: #ffffff;
+  --card-border: 3px solid #111111;
+  --card-shadow: 6px 6px 0 #111111;
+  --card-shadow-hover: 10px 10px 0 #111111;
+  --card-lift: -4px;
+  --status: #00a86b;
+
+  --rv-from: translateY(40px) rotate(-3deg) scale(0.92);
+  --rv-dur: 520ms;
+  --rv-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --rv-stagger: 50ms;
+  --word-anim: w-slam;
+  --word-dur: 600ms;
+  --word-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --word-gap: 70ms;
+  --word-overflow: visible;
+  --pop-anim: p-sticker;
+  --pop-dur: 480ms;
+  --pop-ease: cubic-bezier(0.34, 1.7, 0.64, 1);
+  --drift: 8px;
+}
+
+/* 6. Soft Clay: bouncy, puffy bubbles */
+[data-theme="clay"] {
+  color-scheme: light;
+  --bg: #fdf1ea;
+  --bg-elev: #fff7f2;
+  --surface: #fff7f2;
+  --surface-2: #ffe1d2;
+  --bar: #ffd2bd;
+  --chip: #ffe1d2;
+  --text: #3b2a26;
+  --text-2: #5c453f;
+  --muted: #7a625b;
+  --line: rgba(120, 70, 50, 0.16);
+  --line-strong: #b9785a;
+  --accent: #f2766b;
+  --accent-hover: #f48a7f;
+  --accent-soft: rgba(242, 118, 107, 0.16);
+  --on-accent: #2a1a16;
+  --link: #b5382f;
+  --shadow-sm: 0 2px 6px rgba(120, 70, 50, 0.14);
+  --shadow-lg: 10px 10px 24px rgba(180, 110, 80, 0.22), -8px -8px 20px rgba(255, 255, 255, 0.9);
+  --scrim: rgba(59, 42, 38, 0.4);
+  --font-body: "Nunito Variable", var(--font-fallback);
+  --font-display: "Nunito Variable", var(--font-fallback);
+  --display-weight: 900;
+  --display-track: -0.025em;
+  --r-sm: 16px;
+  --r-md: 24px;
+  --r-lg: 32px;
+  --card-bg: #fff7f2;
+  --card-shadow: 10px 10px 24px rgba(180, 110, 80, 0.2), -8px -8px 20px rgba(255, 255, 255, 0.9), inset 0 -4px 8px rgba(180, 110, 80, 0.08);
+  --card-shadow-hover: 14px 14px 30px rgba(180, 110, 80, 0.26), -10px -10px 24px rgba(255, 255, 255, 0.95), inset 0 -4px 8px rgba(180, 110, 80, 0.08);
+  --card-lift: -4px;
+
+  --rv-from: translateY(30px) scale(0.82);
+  --rv-dur: 900ms;
+  --rv-ease: cubic-bezier(0.34, 1.7, 0.64, 1);
+  --rv-stagger: 70ms;
+  --word-anim: w-bounce;
+  --word-dur: 900ms;
+  --word-ease: cubic-bezier(0.34, 1.7, 0.64, 1);
+  --word-gap: 90ms;
+  --word-overflow: visible;
+  --pop-anim: p-bubble;
+  --pop-dur: 640ms;
+  --pop-ease: cubic-bezier(0.34, 1.7, 0.64, 1);
+  --drift: 16px;
+}
+
+/* 7. Aurora: slow floating glow */
+[data-theme="aurora"] {
+  color-scheme: dark;
+  --bg: #06121c;
+  --bg-elev: #0d2230;
+  --surface: #0a1b29;
+  --surface-2: #0d2230;
+  --bar: #143246;
+  --chip: #143246;
+  --text: #e6fbff;
+  --text-2: #b3d4dd;
+  --muted: #7fa6b3;
+  --line: rgba(46, 230, 182, 0.18);
+  --line-strong: #2f6a86;
+  --accent: #2ee6b6;
+  --accent-hover: #6ff0cd;
+  --accent-soft: rgba(46, 230, 182, 0.13);
+  --on-accent: #04141a;
+  --link: #2ee6b6;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.5);
+  --scrim: rgba(2, 10, 16, 0.6);
+  --font-body: "Inter Variable", var(--font-fallback);
+  --font-display: "Sora Variable", var(--font-fallback);
+  --display-track: -0.04em;
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-lg: 26px;
+  --card-bg: color-mix(in srgb, var(--surface-2) 70%, transparent);
+  --card-border: 1px solid var(--line);
+  --card-lift: -6px;
+
+  --rv-from: translateY(56px);
+  --rv-filter: blur(8px);
+  --rv-dur: 1400ms;
+  --rv-stagger: 100ms;
+  --word-anim: w-float;
+  --word-dur: 1400ms;
+  --word-gap: 120ms;
+  --word-overflow: visible;
+  --pop-anim: p-glow;
+  --pop-dur: 700ms;
+  --drift: 48px;
+}
+
+/* 8. Swiss Grid: precise lateral slide, hairline labels */
+[data-theme="swiss"] {
+  color-scheme: light;
+  --bg: #ffffff;
+  --bg-elev: #ffffff;
+  --surface: #f6f6f6;
+  --surface-2: #f0f0f0;
+  --bar: #d4d4d4;
+  --chip: #ffffff;
+  --text: #000000;
+  --text-2: #262626;
+  --muted: #595959;
+  --line: #d0d0d0;
+  --line-strong: #000000;
+  --accent: #e10600;
+  --accent-hover: #b80500;
+  --accent-soft: rgba(225, 6, 0, 0.08);
+  --on-accent: #ffffff;
+  --link: #c00500;
+  --shadow-sm: none;
+  --shadow-lg: none;
+  --scrim: rgba(0, 0, 0, 0.45);
+  --font-body: "Archivo Variable", var(--font-fallback);
+  --font-display: "Archivo Variable", var(--font-fallback);
+  --display-weight: 800;
+  --display-track: -0.04em;
+  --r-sm: 0px;
+  --r-md: 0px;
+  --r-lg: 0px;
+  --btn-radius: 0px;
+  --label-case: uppercase;
+  --label-track: 0.1em;
+  --card-bg: #ffffff;
+  --card-border: 1px solid #000000;
+  --card-shadow-hover: none;
+  --card-lift: 0px;
+
+  --rv-from: translateX(-48px);
+  --rv-dur: 700ms;
+  --rv-ease: cubic-bezier(0.2, 0, 0, 1);
+  --rv-stagger: 40ms;
+  --word-anim: w-slide;
+  --word-dur: 800ms;
+  --word-ease: cubic-bezier(0.2, 0, 0, 1);
+  --word-gap: 60ms;
+  --pop-anim: p-label;
+  --pop-dur: 420ms;
+  --pop-ease: cubic-bezier(0.2, 0, 0, 1);
+  --drift: 12px;
+}
+
+/* 9. Botanica: slow organic growth */
+[data-theme="botanica"] {
+  color-scheme: light;
+  --bg: #f3f1e8;
+  --bg-elev: #f8f6ee;
+  --surface: #ece9dc;
+  --surface-2: #e4e8d6;
+  --bar: #d9dfc5;
+  --chip: #f3f1e8;
+  --text: #1f2a1d;
+  --text-2: #3a4636;
+  --muted: #5b6753;
+  --line: rgba(31, 42, 29, 0.16);
+  --line-strong: #7d8a6a;
+  --accent: #2f6b3f;
+  --accent-hover: #255632;
+  --accent-soft: rgba(47, 107, 63, 0.12);
+  --on-accent: #ffffff;
+  --link: #2a6339;
+  --shadow-sm: 0 1px 3px rgba(31, 42, 29, 0.1);
+  --shadow-lg: 0 18px 40px rgba(31, 42, 29, 0.14);
+  --scrim: rgba(31, 42, 29, 0.42);
+  --font-display: "Fraunces Variable", Georgia, serif;
+  --display-weight: 600;
+  --display-track: -0.02em;
+  --r-sm: 14px;
+  --r-md: 22px;
+  --r-lg: 30px;
+  --card-bg: #ece9dc;
+  --card-border: 1px solid var(--line);
+  --card-lift: -4px;
+
+  --rv-from: translateY(22px) scale(0.94) rotate(1deg);
+  --rv-dur: 1200ms;
+  --rv-ease: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --rv-stagger: 90ms;
+  --word-anim: w-grow;
+  --word-dur: 1200ms;
+  --word-gap: 110ms;
+  --word-overflow: visible;
+  --pop-anim: p-leaf;
+  --pop-dur: 700ms;
+  --pop-ease: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --drift: 26px;
+}
+
+/* 10. Sunset: warm cream, the page rises like a sunrise */
+[data-theme="sunset"] {
+  color-scheme: light;
+  --bg: #fff7f0;
+  --bg-elev: #fffaf5;
+  --surface: #ffeadb;
+  --surface-2: #ffd9c2;
+  --bar: #ffcaa8;
+  --chip: #fff7f0;
+  --text: #3a1f12;
+  --text-2: #5c3a28;
+  --muted: #7a5340;
+  --line: rgba(58, 31, 18, 0.16);
+  --line-strong: #b9805e;
+  --accent: #c2410c;
+  --accent-hover: #9a3412;
+  --accent-soft: rgba(194, 65, 12, 0.12);
+  --on-accent: #ffffff;
+  --link: #b13a0a;
+  --shadow-sm: 0 1px 3px rgba(58, 31, 18, 0.12);
+  --shadow-lg: 0 22px 50px rgba(150, 60, 20, 0.18);
+  --scrim: rgba(58, 31, 18, 0.42);
+  --font-body: "Inter Variable", var(--font-fallback);
+  --font-display: "Outfit Variable", var(--font-fallback);
+  --display-weight: 700;
+  --display-track: -0.035em;
+  --r-sm: 14px;
+  --r-md: 22px;
+  --r-lg: 30px;
+  --card-lift: -6px;
+
+  --rv-from: translateY(48px) scale(0.9);
+  --rv-dur: 1100ms;
+  --rv-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --rv-stagger: 80ms;
+  --word-anim: w-sunrise;
+  --word-dur: 1200ms;
+  --word-gap: 110ms;
+  --pop-anim: p-warm;
+  --pop-dur: 600ms;
+  --drift: 24px;
+}
+
+/* A manual reduced-motion switch, on top of the OS setting */
+[data-motion="reduced"] *,
+[data-motion="reduced"] *::before,
+[data-motion="reduced"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}

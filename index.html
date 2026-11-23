@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="lumen" data-motion="normal">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DemoFrontEnd</title>
+    <meta name="description" content="Satu halaman, sepuluh template: tiap template punya animasi scroll dan teks pop-up interaktif dengan karakter sendiri. Semua konten hanya contoh." />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230071e3'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23ffffff'/%3E%3C/svg%3E" />
+
+    <!-- Apply the chosen template before first paint, so there is no flash of the default.
+         Order: ?style= link, then the saved choice, then the default. -->
+    <script>
+      try {
+        var ids = ['lumen','midnight','obsidian','editorial','brutal','clay','aurora','swiss','botanica','sunset'];
+        var q = new URLSearchParams(location.search).get('style');
+        var saved = localStorage.getItem('demo-style');
+        var pick = ids.indexOf(q) > -1 ? q : ids.indexOf(saved) > -1 ? saved : 'lumen';
+        document.documentElement.setAttribute('data-theme', pick);
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

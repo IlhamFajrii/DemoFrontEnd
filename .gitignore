@@ -1,0 +1,15 @@
+node_modules
+dist
+qa/results
+*.local
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+coverage
+
+# Environment and logs
+.env
+.env.*
+!.env.example
+*.log
